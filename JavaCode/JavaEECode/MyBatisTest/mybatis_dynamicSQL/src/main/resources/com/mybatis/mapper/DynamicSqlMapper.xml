@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mapper接口的全类名和映射文件的namespace一致
+    mapper接口中的方法的方法名要和映射文件中的sql语句的id保持一致   -->
+<mapper namespace="com.mybatis.mapper.DynamicSqlMapper">
+    <!--<insert id="insertUser">
+          insert into t_user values(null,'admin','123456',23,'男','12345@qq.com')
+      </insert>   -->
+
+    <!--动态sql:
+    1.if:通过测试表达式判断标签中的内容是否有效（是否拼接到sql中）
+    2.where:若标签中有条件成立，自动生成where关键字；自动去除内容前多余and；若都不成立，则无任何功能
+    3.trim:自动在前后生成或删除多余关键字
+    4.choose:when，otherwise 相当于if...else...
+      when至少一个，otherwise至多一个
+    5.sql片段：记录一段sql，在需要的地方用include引入
+    -->
+    <sql id="empColumns">
+        emp_id,emp_name,age,gender,dept_id
+    </sql>
+    <select id="getEmpByConditionIf" resultType="Emp">
+        select * from t_emp where
+        <if test="empName != null and empName != ''">
+            emp_name = #{empName}
+        </if>
+        <if test="age != null and age != ''">
+            age = #{age}
+        </if>
+        <if test="gender != null and gender != ''">
+            gender = #{gender}
+        </if>
+    </select>
+    <select id="getEmpByConditionWhere" resultType="Emp">
+        select * from t_emp
+        <where>
+            <if test="empName != null and empName != ''">
+                emp_name = #{empName}
+            </if>
+            <if test="age != null and age != ''">
+                age = #{age}
+            </if>
+            <if test="gender != null and gender != ''">
+                gender = #{gender}
+            </if>
+        </where>
+    </select>
+    <select id="getEmpByCondition" resultType="Emp">
+        select * from t_emp
+        <trim prefix="where" suffixOverrides="and">
+            <if test="empName != null and empName != ''">
+                emp_name = #{empName} and
+            </if>
+            <if test="age != null and age != ''">
+                age = #{age} and
+            </if>
+            <if test="gender != null and gender != ''">
+                gender = #{gender}
+            </if>
+        </trim>
+    </select>
+
+    <!--List<Emp> getEmpByChoose(Emp emp);-->
+    <select id="getEmpByChoose" resultType="emp">
+        select * from t_emp
+        <where>
+            <choose>
+                <when test="empName != null and empName !=''">
+                    emp_name = #{empName}
+                </when>
+                <when test="age != null and age !=''">
+                    age = #{age}
+                </when>
+                <when test="gender != null and gender !=''">
+                    gender = #{gender}
+                </when>
+
+            </choose>
+        </where>
+    </select>
+
+    <!--foreach批量添加和删除-->
+    <!--void insertMoreEmp(List<Emp> emps);-->
+    <select id="insertMoreEmp">
+        insert into t_emp values
+        <foreach collection="emps" item="emp" separator=",">
+            (null, #{emp.empName}, #{emp.age}, #{emp.gender}, null)
+        </foreach>
+    </select>
+    <!--void deleteMoreEmp(@Param("empIds") Integer[] empIds);-->
+    <select id="deleteMoreEmp">
+        delete from t_emp where emp_id in
+        <foreach collection="empIds" item="empId" separator="," open="(" close=")">
+            #{empId}
+        </foreach>
+    </select>
+</mapper>

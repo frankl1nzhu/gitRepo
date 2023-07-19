@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--
+           xmlns:c="http://www.springframework.org/schema/c"
+           xmlns:p="http://www.springframework.org/schema/p"
+    -->
+
+    <!--set方法注入,用property，无参构造 -->
+    <bean id="book" class="com.sc.spring6.di.Book">
+        <property name="author" value="zhangsan"/>
+        <property name="name" value="学习手册"/>
+    </bean>
+    <!--构造器注入,用constructor-arg,有参构造 -->
+    <bean id="bookCon" class="com.sc.spring6.di.Book">
+        <constructor-arg name="name" value="游戏手册"/>
+        <constructor-arg name="author" value="lisi"/>
+    </bean>
+
+    <!--value用于普通属性， ref用于注入对象类型的属性-->
+    <!--数组类型属性
+        <property name = "hobbies">
+            <array>
+                <value>吃饭</value>
+                <value>睡觉</value>
+            </array>
+        </property>
+
+        list类型
+        <property name = "empList">
+            <list>
+                <ref bean="empOne"></ref>       两个emp对象
+                <ref bean="empTwo"></ref>
+            </list>
+        </property>
+
+        map类型
+        <property name = "teacherMap">
+            <map>
+                <entry>
+                    <key>
+                        <value>001</value>
+                    </key>
+                    <ref bean = "teacherOne"/>
+                </entry>
+                <entry>
+                    <key>
+                        <value>002</value>
+                    </key>
+                    <ref bean = "teacherTwo"/>
+                </entry>
+            </map>
+        </property>-->
+
+    <!--内部bean方式，不需要先注入两个对象
+    <bean id="book" class="com.sc.spring6.di.Book">
+        <property name="author" value="zhangsan"/>
+        <property name="name" value="学习手册"/>
+
+        <property name="type">
+            <bean id="type" class="com.sc.spring6.di.Type">
+                <property name="dtype" value="童话书"/>
+            </bean>
+        </property>
+    </bean>
+    -->
+
+    <!--p和c命名空间需要导入xml约束-->
+    <!--
+    p命名注入，property，无参构造
+    <bean id="" class="" p:name="小明" p:age="20"/>
+
+    c命名注入，constructor,通过构造器有参构造
+    <bean id="" class="" c:name="小明" c:age="20"/>
+    -->
+</beans>

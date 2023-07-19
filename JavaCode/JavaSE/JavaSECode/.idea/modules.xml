@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/JavaSECode.iml" filepath="$PROJECT_DIR$/JavaSECode.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Oriented object/Oriented object.iml" filepath="$PROJECT_DIR$/Oriented object/Oriented object.iml" />
+      <module fileurl="file://$PROJECT_DIR$/array/array.iml" filepath="$PROJECT_DIR$/array/array.iml" />
+    </modules>
+  </component>
+</project>

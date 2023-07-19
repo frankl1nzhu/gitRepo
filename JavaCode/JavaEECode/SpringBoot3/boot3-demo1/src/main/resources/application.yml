@@ -1,0 +1,27 @@
+---
+server:
+  port: 8080
+---  #多文档分隔
+person:
+  name: 张三
+  age: 21
+  birth-day: 2000/10/10 12:12:12
+  like: true
+  sheep:
+    id: 1
+    name: 肖恩
+    age: 3
+#数组用-表示不同元素
+  dogs:
+    - id: 1
+      name: dog1
+    - id: 2
+      name: dog2
+#map集合
+  cats:
+    cat1:
+      id: 1
+      name: cat1
+    cat2:
+      id: 2
+      name: cat2

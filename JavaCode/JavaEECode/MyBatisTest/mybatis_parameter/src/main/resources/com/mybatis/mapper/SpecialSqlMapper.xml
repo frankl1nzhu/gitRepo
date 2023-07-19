@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mapper接口的全类名和映射文件的namespace一致
+    mapper接口中的方法的方法名要和映射文件中的sql语句的id保持一致   -->
+<mapper namespace="com.mybatis.mapper.SpecialSqlMapper">
+<!--    <insert id="insertUser">
+          insert into t_user values(null,'admin','123456',23,'男','12345@qq.com')
+    </insert>   -->
+
+    <!--  List<User> getUserByLike(@Param("mohu") String mohu);-->
+    <select id="getUserByLike" resultType="User">
+        select * from t_user where username like "%"#{mohu}"%"
+    </select>
+
+    <!--void deleteMoreUser(String ids);
+    只能使用${}-->
+    <select id="deleteMoreUser">
+        delete from t_user where Id in(${ids})
+    </select>
+    
+    <!--List<User> getUserList(@Param("tableName") String tableName);
+    只能用${}-->
+    <select id="getUserList" resultType="User">
+        select * from ${tableName}
+    </select>
+</mapper>

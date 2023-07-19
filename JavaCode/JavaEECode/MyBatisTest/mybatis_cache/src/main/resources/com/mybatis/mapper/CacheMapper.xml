@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mapper接口的全类名和映射文件的namespace一致
+    mapper接口中的方法的方法名要和映射文件中的sql语句的id保持一致   -->
+<mapper namespace="com.mybatis.mapper.CacheMapper">
+    <!--<insert id="insertUser">
+          insert into t_user values(null,'admin','123456',23,'男','12345@qq.com')
+      </insert>   -->
+
+    <cache/>   <!--开启二级缓存-->
+
+    <!--    Emp getEmpById(@Param("Id") Integer Id);-->
+    <select id="getEmpById" resultType="emp">
+        select * from t_emp where emp_id = #{empId}
+    </select>
+</mapper>

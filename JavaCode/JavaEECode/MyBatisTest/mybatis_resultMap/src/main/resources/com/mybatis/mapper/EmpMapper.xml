@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mapper接口的全类名和映射文件的namespace一致
+    mapper接口中的方法的方法名要和映射文件中的sql语句的id保持一致   -->
+<mapper namespace="com.mybatis.mapper.EmpMapper">
+    <!--<insert id="insertUser">
+          insert into t_user values(null,'admin','123456',23,'男','12345@qq.com')
+    </insert>-->
+
+    <!--java用驼峰命名，mysql用下划线，导致字段名和属性名不一致
+        解决方法：在mybatis-config.xml文件中引入Setting设置     -->
+
+    <!--使用ResultMap自定义映射处理：
+    处理多对一的映射关系：
+    1：级联关系映射
+    2：association
+
+    处理一对多：
+    1.collection
+    2.分步查询-->
+
+    <!--   Emp getEmpById(int id);-->
+    <select id="getEmpByEmpId" resultType="Emp">
+        select * from t_emp where emp_id=#{empId}
+    </select>
+
+    <resultMap id="EmpAndDeptResultMapOne" type="Emp"> <!--级联方式-->
+        <id column="emp_id" property="empId"/>
+        <result column="emp_name" property="empName"/>
+        <result column="age" property="age"/>
+        <result column="gender" property="gender"/>
+        <result column="dept_id" property="dept.deptId"/>
+        <result column="dept_name" property="dept.deptName"/>
+    </resultMap>
+
+    <resultMap id="EmpAndDeptResultMapTwo" type="Emp"> <!--association-->
+        <id column="emp_id" property="empId"/>
+        <result column="emp_name" property="empName"/>
+        <result column="age" property="age"/>
+        <result column="gender" property="gender"/>
+        <association property="dept" javaType="Dept">
+            <id column="dept_id" property="deptId"/>
+            <result column="dept_name" property="deptName"/>
+        </association>
+    </resultMap>
+
+    <!--    Emp getEmpAndDeptByEmpId(@Param("empId") int id);-->
+    <select id="getEmpAndDeptByEmpId" resultMap="EmpAndDeptResultMapTwo">
+        select *
+        from t_emp
+        left join t_dept
+        on t_emp.dept_id = t_dept.dept_id
+        where t_emp.emp_id = #{empId}
+    </select>
+
+    <resultMap id="EmpAndDeptResultByStep" type="Emp"> <!--association分步查询-->
+        <id column="emp_id" property="empId"/>
+        <result column="emp_name" property="empName"/>
+        <result column="age" property="age"/>
+        <result column="gender" property="gender"/>
+        <!--
+            property：需要处理的映射属性名
+            select：设置分步查询的sql的唯一标识
+            column：设置分步查询的条件字段
+            fetchType：在开启延迟加载的环境中，通过该属性设置当前分步查询是否使用延迟加载
+                        eagle|lazy
+        -->
+        <association property="dept" fetchType="lazy"
+                     select="com.mybatis.mapper.DeptMapper.getEmpAndDeptByStepTwo"
+                     column="dept_id">
+        </association>
+    </resultMap>
+
+    <!-- Emp getEmpAndDeptByStepOne(@Param("empId") int empId);-->
+    <select id="getEmpAndDeptByStepOne" resultMap="EmpAndDeptResultByStep">
+        select * from t_emp where emp_id = #{empId}
+    </select>
+    
+    <!--List<Emp> getDeptAndEmpByStepTwo(@Param("deptId") int deptId);-->
+    <select id="getDeptAndEmpByStepTwo" resultType="Emp">
+        select * from t_emp where dept_id = #{dept}
+    </select>
+</mapper>

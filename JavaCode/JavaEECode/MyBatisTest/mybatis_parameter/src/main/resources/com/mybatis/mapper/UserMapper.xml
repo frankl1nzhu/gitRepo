@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mapper接口的全类名和映射文件的namespace一致
+    mapper接口中的方法的方法名要和映射文件中的sql语句的id保持一致   -->
+<mapper namespace="com.mybatis.mapper.UserMapper">
+    <!--<insert id="insertUser">
+            insert into t_user values(null,'admin','123456',23,'男','12345@qq.com')
+        </insert>   -->
+
+<!--    User getUserByUserName(String userName);-->
+    <select id = "getUserByUsername" resultType="User">
+    <!--select * from t_user where username = #{username};-->
+        select * from t_user where username = '${username}'
+    </select>
+
+<!-- User checkLogin(String username, String password); -->
+    <select id="checkLogin" resultType="User">
+        select * from t_user where username = #{arg0} and password = #{arg1}
+    </select>
+
+<!-- User checkLoginByMap(User checkLoginByMap(Map<String,Object> map);); -->
+    <select id="checkLoginByMap" resultType="User">
+        select * from t_user where username = #{username} and password = #{password}
+    </select>
+
+    <!--void insertUser(User user)-->
+    <select id="insertUser">
+        insert into t_user values(null,#{username},#{password},#{age},#{gender},#{email})
+    </select>
+
+    <!--User checkLoginByParam(@Param("username1") String username, @Param("password1") String password);-->
+    <select id="checkLoginByParam" resultType="User">
+        select * from t_user where username = #{username1} and password = #{password1}
+    </select>
+</mapper>
