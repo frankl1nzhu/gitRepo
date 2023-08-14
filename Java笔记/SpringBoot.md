@@ -696,7 +696,7 @@ new SpringApplicationBuilder()
     .run(args);
 ```
 
-## Spring Profiles 环境隔离
+## Profiles 环境隔离
 
 步骤：
 

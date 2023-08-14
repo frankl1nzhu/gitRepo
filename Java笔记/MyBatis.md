@@ -1,3 +1,38 @@
+# MyBatisPlus
+
+1. Mapper接口继承BaseMapper
+2. Service接口继承IService
+3. ServiceImpl继承serviceImpl，实现Service
+
+### 常用注解
+
+@TableName，对应数据库中的表名
+
+@TableId，设置主键，value为字段名，type为主键类型，如自增或雪花算法
+
+@TableField，在pojo类中指定属性对应的字段名
+
+@TableLogic，假删除，0为未删，1为已删
+
+### QueryWrapper
+
+用于查找的条件构造器，生成关于pojo类的条件
+
+.selectList查询所有字段
+
+.selectMaps查询选定字段，返回List < Map <String, Object> >类型
+
+.inSql对某字段自定sql语句查询
+
+### 分页插件
+
+```java
+Page<User> page = new page<>(2, 3)
+//2为当前第几页，3为每页记录数
+```
+
+
+
 ## **MyBatis工程一般结构：**
 
 *   src
