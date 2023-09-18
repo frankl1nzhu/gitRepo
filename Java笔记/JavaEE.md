@@ -73,7 +73,7 @@ destroy方法，仅在服务器销毁或应用程序停止时执行一次
 ###### list
 
 ```xml
-		<property name = "empList">
+	<property name = "empList">
             <list>
                 <ref bean="empOne"/>       <!--两个emp对象-->
                 <ref bean="empTwo"/>
