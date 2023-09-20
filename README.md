@@ -1,5 +1,6 @@
 ## Déposer mes notes
-## faimdeloup est un back-end basé système de gestion de base de données basé sur SpringBoot et MyBatis.
+## faimdeloup est un système de gestion de base de données 
+## réalisé par SpringBoot et MyBatisPlus.
 
 
 ## 存放笔记
