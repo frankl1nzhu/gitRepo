@@ -2,6 +2,8 @@ package TD_Tests;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.logging.Logger;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class VoitureTest {
@@ -15,5 +17,11 @@ public class VoitureTest {
         assertTrue(voiture.getAnnee() > 2010);
         assertTrue(voiture.getKm() < 200000);
         assertTrue(voiture.getPuissance() < 800);
+        Logger logger = Logger.getGlobal();
+        logger.info("start process...");
+        logger.warning("memory is running out...");
+        logger.fine("ignored.");
+        logger.severe("process will be terminated...");
+
     }
 }

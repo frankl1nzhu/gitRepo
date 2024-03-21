@@ -6,5 +6,6 @@ public class Main {
         voiture.setKm(200000);
         voiture.setPuissance(500);
         System.out.println(voiture);
+        
     }
 }
